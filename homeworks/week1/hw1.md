@@ -6,7 +6,7 @@
 5. 1 ~ 4 之後可以不用重複進行
 6. 以 `git branch branchName` 建立新的分支
 7. 以 `git checkout branchName` 移動到新的分支
-8. 可使用 `git check out -b branchName` 指令將前面兩個步驟合併
+8. 可使用 `git checkout -b branchName` 指令將前面兩個步驟合併
 9. 可以開始寫作業 (已有作業檔案)
 10. 寫完之後使用 `git add .` 或 `git add 檔名` 將修改過的檔案放到 stage 中
 11. 以 `git commit -m "打想要表達的訊息"` 在 local 端進行 commit
