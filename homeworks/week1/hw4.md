@@ -19,7 +19,7 @@
 
 ###### Github
 1. 若也想在遠端也存有一份檔案，可以申請 Github 帳戶
-2. 在 Github也建立一個 repository ，之後回到 CLI，以`git remote add origin repository 網址`設定 local 端與 Github的連結
+2. 在 Github也建立一個 repository ，之後回到 CLI，以`git remote add origin repository的網址`設定 local 端與 Github的連結
 3. 以 `git push -u origin main` 將本地主檔推送到 Github 上
 4. 之後若在 local 端建立新的 branch 修改，也可以將 branch 推送到 Github上，指令為 `git push -u origin branchName`
 5. 之後使用 Github 的 pull request 功能將遠端的 main 及 branch 進行 merge
