@@ -14,9 +14,8 @@ function repeat(str, times) {
 	for(var i = 0; i < times; i++) {
 		result = result + str
 	}
-  return result
+	return result
 }
 
-console.log(join(['a'], '!'));
-
-console.log(repeat('a', 5));
+//console.log(join(['a'], '!'));
+//console.log(repeat('a', 5));
