@@ -21,7 +21,18 @@ const options = {
 request(
   options,
   (error, response, body) => {
-    const json = JSON.parse(body)
+    if (error) {
+      return console.log('Failed to get top games', error)
+    }
+
+    let json
+    try {
+      json = JSON.parse(body)
+    } catch (error) {
+      console.log('Body is not in JSON format', error)
+      return
+    }
+
     for (let i = 0; i < json.top.length; i++) {
       console.log(json.top[i].viewers, json.top[i].game.name)
     }

@@ -16,13 +16,30 @@ const options = {
   }
 }
 
-request(options, getStream)
-offset = 100
-request(options, getStream)
+function getStreams() {
+  request(options,
+    (error, response, body) => {
+      if (error) {
+        return console.log('Failed to get streams')
+      }
 
-function getStream(error, response, body) {
-  const json = JSON.parse(body)
-  for (let i = 0; i < json.streams.length; i++) {
-    console.log(json.streams[i].channel.status, json.streams[i].channel._id)
-  }
+      let json
+      try {
+        json = JSON.parse(body)
+      } catch (error) {
+        console.log('Body is not in JSON format', error)
+        return
+      }
+      for (let i = 0; i < json.streams.length; i++) {
+        console.log(json.streams[i].channel.status, json.streams[i].channel._id)
+      }
+      if (offset < 100) {
+        offset = 100
+        options.url = `https://api.twitch.tv/kraken/streams/?game=${game}&limit=${limit}&offset=${offset}`
+        getStreams()
+      }
+    }
+  )
 }
+
+getStreams()

@@ -1,11 +1,47 @@
 const request = require('request')
 const process = require('process')
 
-if (process.argv[2] === 'list') {
+const baseURL = 'https://lidemy-book-store.herokuapp.com/books'
+const action = process.argv[2]
+const firstParameter = process.argv[3]
+const secondParameter = process.argv[4]
+
+switch (action) {
+  case 'list':
+    listBooks()
+    break
+  case 'read':
+    readBook(firstParameter)
+    break
+  case 'create':
+    createBook(firstParameter)
+    break
+  case 'update':
+    updateBook(firstParameter, secondParameter)
+    break
+  case 'delete':
+    deleteBook(firstParameter)
+    break
+  default:
+    console.log('Invalid action. Please try again')
+}
+
+function listBooks(error, response, body) {
   request(
-    'https://lidemy-book-store.herokuapp.com/books?_limit=20',
+    `${baseURL}?_limit=20`,
     (error, response, body) => {
-      const json = JSON.parse(body)
+      if (error) {
+        return console.log('Failed to list books', error)
+      }
+
+      let json
+      try {
+        json = JSON.parse(body)
+      } catch (error) {
+        console.log('Body is not in JSON format', error)
+        return
+      }
+
       for (let i = 0; i < json.length; i++) {
         console.log(json[i].id, json[i].name)
       }
@@ -13,46 +49,72 @@ if (process.argv[2] === 'list') {
   )
 }
 
-if (process.argv[2] === 'read') {
-  const bookID = process.argv[3]
+function readBook(bookID) {
   request(
-    `https://lidemy-book-store.herokuapp.com/books/${bookID}`,
+    `${baseURL}/${bookID}`,
     (error, response, body) => {
-      const json = JSON.parse(body)
+      if (error) {
+        return console.log('Failed to read a book', error)
+      }
+
+      let json
+      try {
+        json = JSON.parse(body)
+      } catch (error) {
+        console.log('Body is not in JSON format', error)
+        return
+      }
       console.log(json.id, json.name)
     }
   )
 }
 
-if (process.argv[2] === 'create') {
+function createBook(bookName) {
   request.post(
     {
-      url: 'https://lidemy-book-store.herokuapp.com/books/',
+      url: `${baseURL}/`,
       form: {
-        name: process.argv[3]
+        name: bookName
       }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.log('Failed to create a new book', error)
+      }
+      console.log('Created a new book!')
+      console.log(body)
     }
   )
 }
 
-if (process.argv[2] === 'update') {
-  const bookID = process.argv[3]
+function updateBook(bookID, bookName) {
   request.patch(
     {
-      url: `https://lidemy-book-store.herokuapp.com/books/${bookID}`,
+      url: `${baseURL}/${bookID}`,
       form: {
-        id: bookID,
-        name: process.argv[4]
+        name: bookName
       }
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.log('Failed to update the book', error)
+      }
+      console.log('Updated the book!')
+      console.log(body)
     }
   )
 }
 
-if (process.argv[2] === 'delete') {
-  const bookID = process.argv[3]
+function deleteBook(bookID) {
   request.del(
     {
-      url: `https://lidemy-book-store.herokuapp.com/books/${bookID}`
+      url: `${baseURL}/${bookID}`
+    },
+    (error, response, body) => {
+      if (error) {
+        return console.log('Failed to delete the book', error)
+      }
+      console.log('Deleted the book!')
     }
   )
 }
