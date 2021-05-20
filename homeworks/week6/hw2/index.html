@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>活動報名表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./hw2_styles.css">
+</head>
+<body>
+  <div class="wrapper">
+    <form class="form">
+      <h1 class="form__title">新拖延運動報名表單</h1>
+      <div class="form__info">
+        活動日期：2020/12/10 ~ 2020/12/11<br />
+        活動地點：台北市大安區新生南路二段1號
+      </div>
+      <div class="form__required">
+        * 必填
+      </div>
+      <div class="form__input">
+        <div class="form__input-title required">
+          暱稱
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答" required="required" />
+        </div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title required">
+          電子郵件
+        </div>
+        <div class="form__input-content">
+          <input type="email" placeholder="您的電子郵件" required="required" />
+        </div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title required">
+          手機號碼
+        </div>
+        <div class="form__input-content">
+          <input type="tel" placeholder="您的手機號碼" required="required" />
+        </div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title required">
+          報名類型
+        </div>
+        <div class="form__input-content">
+          <div class="form__input-option">
+            <input type="radio" name="channel" id="bed" required="required"/><label for="bed"> 躺在床上用想像力實作</label><br />
+            <input type="radio" name="channel" id="ground" required="required"/><label for="ground"> 趴在地上滑手機找現成的</label>
+          </div>
+        </div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title required">
+          怎麼知道這個活動的？
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答" required="required"/>
+        </div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title">
+          其他
+        </div>
+        <div class="form__input-desc">
+          對活動的一些建議
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答"/>
+        </div>
+      </div>
+      <input class="form__submit" type="submit" />
+      <div class="form__info">
+        請勿透過表單送出您的密碼。
+      </div>
+
+    </form>
+  </div>
+  <footer>
+    © 2020 © Copyright. All rights Reserved.
+  </footer>
+
+</body>
+</html>
