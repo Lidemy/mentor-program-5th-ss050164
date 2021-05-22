@@ -141,6 +141,7 @@ h2 {
 
 .section__images {
   display: flex;
+  justify-content: center;
 }
 
 .section__images img {
@@ -158,7 +159,7 @@ h2 {
   border: solid 1px #c7e5ec;
   box-shadow: -1.4px -1.4px 4px 0 #d8eaef;
   width: 30%;
-  height: 210px;
+  min-height: 210px;
   padding: 20px;
   font-size: 16px;
   font-family: MicrosoftJhengHei;
@@ -198,7 +199,7 @@ h2 {
   letter-spacing: 0.14px;
   line-height: 1.5em;
   position: relative;
-  top: 40%;
+  padding-top: 80px;
 }
 
 footer {
@@ -240,7 +241,7 @@ footer {
   padding: 15px 0px;
 }
 
-@media screen and (min-width: 350px) and (max-width: 768px) {
+@media (min-width: 340px) and (max-width: 768px) {
   .navbar .wrapper {
     flex-direction: column;
     height: 120px;
@@ -249,13 +250,12 @@ footer {
   }
 
   .navbar__site-name {
-    margin-top: 10px;
+    margin-top: 15px;
   }
 
   .navbar__list {
     display: flex;
     width: 100%;
-
   }
 
   .navbar__list li {
@@ -308,10 +308,12 @@ footer {
   .footer__bottom {
     font-size: 8px;
   }
-
 }
 
-@media screen and (max-width: 350px) {
+@media (max-width: 340px) {
+  body {
+    min-width: 250px;
+  }
   .navbar .wrapper {
     flex-direction: column;
     height: 170px;
