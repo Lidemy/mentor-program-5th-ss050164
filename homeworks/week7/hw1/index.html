@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>活動報名表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./hw1_styles.css">
+</head>
+<body>
+  <div class="wrapper">
+    <form class="form">
+      <h1 class="form__title">新拖延運動報名表單</h1>
+      <div class="form__info">
+        活動日期：2020/12/10 ~ 2020/12/11<br />
+        活動地點：台北市大安區新生南路二段1號
+      </div>
+      <div class="form__required">
+        * 必填
+      </div>
+      <div class="form__input required hide">
+        <div class="form__input-title">
+          暱稱
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答" name="Name" />
+        </div>
+        <div class="form__input-reminder">請填寫暱稱</div>
+      </div>
+      <div class="form__input required hide">
+        <div class="form__input-title">
+          電子郵件
+        </div>
+        <div class="form__input-content">
+          <input type="email" placeholder="您的電子郵件" name="Email" />
+        </div>
+        <div class="form__input-reminder">請填寫電子郵件</div>
+      </div>
+      <div class="form__input required hide">
+        <div class="form__input-title">
+          手機號碼
+        </div>
+        <div class="form__input-content">
+          <input type="tel" placeholder="您的手機號碼" name="Mobile" />
+        </div>
+        <div class="form__input-reminder">請填寫手機號碼</div>
+      </div>
+      <div class="form__input required hide">
+        <div class="form__input-title">
+          報名類型
+        </div>
+        <div class="form__input-content">
+          <div class="form__input-option">
+            <label><input type="radio" name="Option" value="bed" /> 躺在床上用想像力實作</label><br />
+            <label><input type="radio" name="Option" value="ground"/> 趴在地上滑手機找現成的</label>
+          </div>
+          <div class="form__input-reminder">請點選報名類型</div>
+        </div>
+      </div>
+      <div class="form__input required hide">
+        <div class="form__input-title">
+          怎麼知道這個活動的？
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答" name="Channel"/>
+        </div>
+        <div class="form__input-reminder">請填寫回答</div>
+      </div>
+      <div class="form__input">
+        <div class="form__input-title">
+          其他
+        </div>
+        <div class="form__input-desc">
+          對活動的一些建議
+        </div>
+        <div class="form__input-content">
+          <input type="text" placeholder="您的回答" class="other" name="Other" />
+        </div>
+      </div>
+      <input class="form__submit" type="submit" />
+      <div class="form__info">
+        請勿透過表單送出您的密碼。
+      </div>
+
+    </form>
+  </div>
+  <footer>
+    © 2020 © Copyright. All rights Reserved.
+  </footer>
+  <script>
+    document.querySelector("form").addEventListener("submit", (e) => {
+      let values = {}
+
+      const elements = document.querySelectorAll(".required")
+      for (let i = 0; i < elements.length; i++) {
+        const text = elements[i].querySelector("input[type=text]")
+        const email = elements[i].querySelector("input[type=email]")
+        const tel = elements[i].querySelector("input[type=tel]")
+        const option = elements[i].querySelectorAll("input[type=radio]")
+
+        if (text) {
+          if (text.value) {
+            values[text.name] = text.value
+          } else {
+            elements[i].classList.remove("hide")
+          }
+        }
+        if (email) {
+          if (email.value) {
+            values[email.name] = email.value
+          }
+          else {
+            elements[i].classList.remove("hide")
+          }
+        }
+        if (tel) {
+          if (tel.value) {
+            values[tel.name]= tel.value
+          }
+          else {
+            elements[i].classList.remove("hide")
+          }
+        }
+        if (option.length > 0) {
+          if (option[0].checked) {
+            values[option[0].name] = option[0].value
+          } else if (option[1].checked) {
+            values[option[1].name] = option[1].value
+          } else {
+            elements[i].classList.remove("hide")
+          }
+        }
+      }
+
+      if (Object.keys(values).length === 5) {
+        const other = document.querySelector(".other")
+        if(other.value) {
+          values[other.name] = other.value
+        }
+        let result = ""
+        for (let i = 0; i < Object.keys(values).length; i++) {
+          if (i === 0) {
+            result += Object.keys(values)[i] + ": " + Object.values(values)[i]
+          } else {
+            result += "\n" + Object.keys(values)[i] + ": " + Object.values(values)[i]
+          }
+        }
+        alert(result)
+      } else {
+        e.preventDefault()
+      }
+    })
+
+  </script>
+
+</body>
+</html>

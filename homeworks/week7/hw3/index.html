@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo List</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <style>
+    .wrapper {
+      max-width: 450px;
+      min-width: 300px;
+      margin: 5px auto;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .title {
+      text-align: center;
+      padding-top: 5px;
+      font-family: Calibri;
+      color: darkblue;
+    }
+
+    .add__block {
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    input[type=text] {
+      min-width: 75%;
+      font-family: Calibri;
+      border: solid 1px #d0d0d0;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .list {
+      padding-bottom: 5%;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      padding: 5px 0px;
+      align-items: center;
+    }
+
+    .todo__content {
+      width: 75%;
+      margin: 0px 5px;
+      word-wrap: break-word;
+      font-family: Calibri;
+      color: darkslateblue;
+      font-weight: bold;
+    }
+
+    .finished .todo__content {
+      color: gray;
+      text-decoration: line-through;
+      font-weight: normal;
+    }
+
+    button {
+      border: none;
+      outline: none;
+      background: #808080;
+      color: white;
+      height: 25px;
+      width: 50px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">
+      <h1>My ToDo List</h1>
+    </div>
+    <div class="add__block">
+      <input type="text" />
+      <button class="add-btn">新增</button>
+    </div>
+    <div class="list">
+    </div>
+  </div>
+
+  <script>
+    document.querySelector(".add-btn").addEventListener("click", (e) => {
+      const value = document.querySelector("input[type=text]").value
+      const div = document.createElement("div")
+      if (value) {
+        div.classList.add("row")
+        div.innerHTML = `
+        <input type="checkbox" class="checkbox"/>
+        <div class="todo__content">${value}</div>
+        <button class="del-btn">刪除</button>`
+        document.querySelector(".list").appendChild(div)
+      }
+      document.querySelector("input[type=text]").value = ""
+    })
+
+    document.querySelector(".list").addEventListener("click", (e) => {
+      if (e.target.classList.contains("del-btn")) {
+        e.target.parentNode.remove()
+      }
+    })
+
+    document.querySelector(".list").addEventListener("click", (e) => {
+      if (e.target.classList.contains("checkbox")) {
+        e.target.parentNode.classList.toggle("finished")
+      }
+    })
+
+  </script>
+</body>
+</html>
