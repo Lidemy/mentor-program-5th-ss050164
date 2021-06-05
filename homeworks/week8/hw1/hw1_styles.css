@@ -1,0 +1,325 @@
+.navbar {
+  box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
+  padding: 0px 20px;
+  position: sticky;
+  top: 0px;
+  background: white;
+  z-index: 10;
+}
+
+.navbar__site-name {
+  color: #489846;
+  font-size: 36px;
+  font-family: Questrial;
+}
+
+.navbar__list {
+  list-style: none;
+  display: flex;
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar .wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 84px;
+  align-items: center;
+}
+
+.navbar__list li {
+  margin-left: 12px;
+  border-radius: 8px;
+  transition: background 0.1s;
+}
+
+.navbar__list a {
+  display: block;
+  text-decoration: none;
+  color: #010101;
+  padding: 12px 20px;
+}
+
+.navbar__list .active,
+.navbar__list li:hover {
+  background: #ff7286;
+}
+
+.navbar__list li.active a,
+.navbar__list li:hover a {
+  color: white;
+}
+
+.wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0px 12px;
+}
+
+.lottery {
+  background: url("./games-bn.jpg") center/cover no-repeat;
+  height: 600px;
+  position: relative;
+}
+
+h3 {
+  margin: 0;
+}
+
+
+
+.lottery__box {
+  position: relative;
+  background: white;
+  border-radius: 16px;    
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  padding: 30px 30px 30px 20px;
+  display: flex;
+  flex-direction: column;  
+}
+
+.lottery__title {
+  text-align: center;
+  color: #5ec1b6;
+  font-size: 18px;
+}
+
+.lottery__info {
+  display: flex;
+  flex-grow: 0;
+  border-bottom: solid 1px #cdcdcd;
+  padding: 20px 0px;
+}
+
+.lottery__subtitle {
+  min-width: 80px;
+  flex-grow: 0;
+  font-weight: bolder;
+}
+
+.lottery__content {
+  margin-left: 5px;
+}
+
+.lottery__btn {
+  text-align: center;
+  align-self: center;
+  color: #ffffff;
+  background: #e62a45;
+  font-size: 16px;
+  font-family: MicrosoftJhengHei;
+  padding: 10px 0px;
+  margin-top: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  width: 80%;
+}
+
+.lottery__btn:hover, .lottery__result-btn:hover {
+  transform: scale(1.1);
+}
+
+.lottery__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 25%;
+  position: relative;
+  z-index: 4;
+  color: white;
+}
+
+.lottery__result-text {
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.lottery__result-btn {
+  text-align: center;
+  background: #e62a45;
+  font-size: 16px;
+  font-family: MicrosoftJhengHei;
+  padding: 10px 0px;
+  width: 300px;
+  margin-top: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.lottery.FIRST {
+  background: url("./flight-4315953_1280.jpg") center/cover no-repeat;
+}
+
+.lottery.SECOND {
+  background: url("./living-room-1872192_1280.jpg") center/cover no-repeat;
+}
+
+.lottery.THIRD {
+  background: url("./youtube-2617510_1280.jpg") center/cover no-repeat;
+}
+
+.lottery.NONE {
+  background: black;
+}
+
+.footer__top .wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__top {
+  background: #e8efee;
+  padding: 35px 40px 40px 40px;
+  font-size: 14px;
+  color: #484848;
+}
+
+.footer__info div + div {
+  margin-top: 16px;
+}
+
+.footer__info {
+  margin-top: 10px;
+  margin-right: 16px;
+}
+
+.footer__site {
+  color: #489846;
+  font-size: 36px;
+  font-family: Questrial;
+}
+
+.footer__bottom {
+  background: #35564b;
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  padding: 15px 0px;
+}
+
+.hide {
+  display: none;
+}
+
+@media (min-width: 340px) and (max-width: 768px) {
+  .navbar .wrapper {
+    flex-direction: column;
+    height: 120px;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .navbar__site-name {
+    margin-top: 15px;
+  }
+
+  .navbar__list {
+    display: flex;
+    width: 100%;
+  }
+
+  .navbar__list li {
+    flex: 1;
+    text-align: center;
+    margin-left: 0;
+  }
+  
+  .lottery__box {
+    width: 300px;
+    padding: 15px 15px;
+  }
+
+  .lottery__title {
+    font-size: 16px;
+  }
+
+  .lottery__result-text {
+    font-size: 20px;
+    text-align: center;
+    padding: 0px 5px;
+    line-height: 2rem;
+  }
+
+
+  .footer__top .wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .footer__info {
+    margin-right: 0px;
+    margin-top: 10px;
+  }
+
+  .footer__bottom {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 340px) {
+  body {
+    min-width: 300px;
+  }
+
+  .navbar .wrapper {
+    flex-direction: column;
+    height: 170px;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .navbar__site-name {
+    margin-top: 20px;
+  }
+
+  .navbar__list {
+    display: flex;
+    width: 100%;
+  }
+
+  .navbar__list li {
+    flex: 1;
+    text-align: center;
+    margin-left: 0;
+  }
+ 
+  .lottery__box {
+    width: 280px;
+    padding: 10px 10px;
+  }
+
+  .lottery__title {
+    font-size: 14px;
+  }
+
+  .lottery__result-text {
+    font-size: 20px;
+    text-align: center;
+    padding: 0px 5px;
+    line-height: 2rem;
+  }
+
+  .footer__top .wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .footer__info {
+    margin-right: 0px;
+    margin-top: 10px;
+  }
+
+  .footer__site {
+    font-size: 30px;
+  }
+
+  .footer__bottom {
+    font-size: 8px;
+  }
+
+}

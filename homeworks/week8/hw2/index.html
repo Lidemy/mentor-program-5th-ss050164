@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitch Streams</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <style>
+    .navbar {
+      box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
+      padding: 0px 20px;
+      position: sticky;
+      top: 0px;
+      background: white;
+      z-index: 10;
+    }
+
+    .navbar .wrapper {
+      display: flex;
+      justify-content: space-between;
+      height: 84px;
+      align-items: center;
+    }
+
+    .navbar__site-name {
+      color: rebeccapurple;
+      font-size: 32px;
+      font-family: Questrial;
+    }
+
+    .navbar__list {
+      list-style: none;
+      display: flex;
+      font-size: 18px;
+      font-family: Questrial;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .navbar__list li {
+      padding: 10px 10px;
+      flex: 1;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .navbar__list li:hover {
+      background: darkblue;
+      color: white;
+    }
+
+    .wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0px 12px;
+    }
+
+    .streams__wrapper {
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 20px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 15px 0px 0px 0px;
+      font-family: Questrial;
+    }
+
+    h2 {
+      margin: 10px 0px 15px 0px;
+      text-align: center;
+      font-family: Questrial;
+    }
+
+    .streams {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stream {
+      width: 320px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      margin-left: 20px;
+      margin-top: 20px;
+      transition: transform 0.1s;
+      background: white;
+    }
+
+    .stream:hover {
+      transform: scale(1.05);
+    }
+
+    .stream__img {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .stream > img {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .stream__bottom {
+      display: flex;
+      align-items: center;
+      padding: 10px 5px;
+    }
+
+    .stream__avatar {
+      min-width: 60px;
+      max-width: 60px;
+      height: 60px;
+      overflow: hidden;
+      border-radius: 50%;
+      flex-grow: 0;
+    }
+
+    .stream__avatar > img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .stream__info {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      margin-left: 10px;
+      font-family: Questrial;
+    }
+
+    .stream__status {
+      font-size: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 10px;
+    }
+
+    @media (min-width: 390px) and (max-width: 768px) {
+      .navbar {
+        padding: 0px;
+      }
+
+      .navbar .wrapper {
+        flex-direction: column;
+        height: 140px;
+        justify-content: space-between;
+        padding: 0px;
+      }
+
+      .navbar__site-name {
+        font-size: 30px;
+        margin-top: 15px;
+      }
+
+      .navbar__list {
+        display: flex;
+        width: 100%;
+      }
+
+      .navbar__list li {
+        text-align: center;
+        margin-left: 0;
+        font-size: 16px;
+
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .streams {
+        max-width: 768px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stream {        
+        margin-left: 0px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      body {
+        min-width: 350px;
+      }
+      .navbar {
+        padding: 0px;
+      }
+
+      .navbar .wrapper {
+        flex-direction: column;
+        height: 100px;
+        justify-content: space-between;
+        padding: 0px;
+      }
+
+      .navbar__site-name {
+        font-size: 24px;
+        margin-top: 10px;
+      }
+
+      .navbar__list {
+        display: flex;
+        width: 100%;
+      }
+
+      .navbar__list li {
+        text-align: center;
+        margin-left: 0;
+        font-size: 14px;
+        padding: 0px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .streams {
+        max-width: 390px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stream {
+        min-width: 300px;
+        margin-left: 0px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="wrapper">
+      <div class="navbar__site-name">
+        Twitch Top Games
+      </div>
+      <ul class="navbar__list">
+
+      </ul>
+    </div>
+  </nav>
+  <div class="main">
+    <div class="streams__wrapper">
+      <h1>Game</h1>
+      <h2>Top 20 popular live streams sorted by viewers</h2>
+      <div class="streams">
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const url = "https://api.twitch.tv/kraken/"
+    const clientID = "tpdkp7cv9zhne97341r6xl07qpwf1q"
+    const acceptValue = "application/vnd.twitchtv.v5+json"
+    const errorMessage = "Error! Try again!"
+
+    function getTopGames(cb) {
+      const gameRequest = new XMLHttpRequest()
+      gameRequest.open("GET", `${url}games/top?limit=5`, true)
+      gameRequest.setRequestHeader("Client-ID", clientID)
+      gameRequest.setRequestHeader("Accept", acceptValue)
+
+      gameRequest.onload = () => {
+        if (gameRequest.status >= 200 && gameRequest.status < 400) {
+          cb(JSON.parse(gameRequest.responseText))
+        } else {
+          alert(errorMessage)
+          return
+        }
+      }
+      gameRequest.onerror = () => {
+        alert(errorMessage)
+      }
+      gameRequest.send()
+    }
+
+    function getStreams(game, cb) {
+      const streamRequest = new XMLHttpRequest()
+      streamRequest.open("GET", `${url}streams?game=${encodeURIComponent(game)}&limit=20`, true)
+      streamRequest.setRequestHeader("Client-ID", clientID)
+      streamRequest.setRequestHeader("Accept", acceptValue)
+
+      streamRequest.onload = () => {
+        if (streamRequest.status >= 200 && streamRequest.status < 400) {          
+          cb(JSON.parse(streamRequest.responseText))
+        } else {
+          alert(errorMessage)
+          return
+        }
+      }
+      streamRequest.onerror = () => {
+        alert(errorMessage)
+      }
+      streamRequest.send()
+    }
+
+    function appendStreams(streams) {
+      for (let i = 0; i < streams.length; i++) {
+        const element = document.createElement("div")
+        element.classList.add("stream")
+        element.setAttribute("data-value", streams[i].channel.url)
+        element.innerHTML = `<img src="${streams[i].preview.large}">
+                              <div class="stream__bottom">
+                                <div class="stream__avatar"><img src="${streams[i].channel.logo}"></div>
+                                <div class="stream__info">
+                                  <div class="stream__status">${streams[i].channel.status}</div>
+                                  <div class="stream__user">${streams[i].channel.name}</div>
+                                </div>
+                              </div>`
+        document.querySelector(".streams").appendChild(element)
+      }
+    }
+
+    getTopGames((gameResponse) => {
+      for (let i = 0; i < gameResponse.top.length; i++) {
+          const element = document.createElement("li")
+          element.innerText = gameResponse.top[i].game.name
+          document.querySelector(".navbar__list").appendChild(element)
+      }
+      const firstGame = gameResponse.top[0].game.name
+      document.querySelector("h1").innerText = firstGame
+      getStreams(firstGame, (streamResponse) => {
+        const streams = streamResponse.streams
+        appendStreams(streams)
+      })
+    })
+
+    document.querySelector(".navbar__list").addEventListener("click", (e) => {
+      const element = e.target.closest("li")
+      if (element) {
+        const selectedGame = element.innerText
+        document.querySelector("h1").innerText = selectedGame
+        document.querySelector(".streams").innerHTML = ""
+        getStreams(selectedGame, function(streamResponse) {
+          const streams = streamResponse.streams
+          appendStreams(streams)
+        })
+      }
+    })
+
+    document.querySelector(".streams").addEventListener("click", (e) => {
+      const element = e.target.closest(".stream")
+      if (element) {
+        window.open(element.getAttribute("data-value"))
+      }
+    })
+
+  </script>
+  
+</body>
+</html>
