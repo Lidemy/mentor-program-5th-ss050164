@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>咬一口廚房</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./hw1_styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="wrapper">
+      <div class="navbar__site-name">
+        Just A Bite!
+      </div>
+      <ul class="navbar__list">
+        <li class="active"><a href="#">抽個大獎</a></li>
+        <li><a href="#">我要點餐</a></li>
+        <li><a href="#">查詢訂單</a></li>
+        <li><a href="#">常見問題</a></li>
+      </ul>
+    </div>
+  </nav>
+  <section class="lottery">
+    <div class="lottery__box">
+      <div class="lottery__title">
+        <h3>2020 夏日輕盈特賞！ 抽獎活動辦法</h3>
+      </div>
+      <div class="lottery__info">
+        <div class="lottery__subtitle">活動期間：</div>
+        <div class="lottery__content">2020/06/01~2020/07/01</div>
+      </div>
+      <div class="lottery__info">
+        <div class="lottery__subtitle">活動說明：</div>
+        <div class="lottery__content">
+          今天老闆佛心來著決定給大家發獎勵，有看有機會，沒看只能幫QQ！只要在店內消費滿1000000元即有機會獲得 - 頭獎日本東京來回雙人遊！
+        </div>
+      </div>
+      <div class="lottery__info">
+        <div class="lottery__subtitle">獎  品：</div>
+        <div class="lottery__content">
+          ❤ 頭獎一名：日本東京來回雙人遊(市價14990元)<br />
+          ❤ 貳獎三名：90 吋電視一台(市價5990元)<br />
+          ❤ 參獎十名：知名 YouTuber 簽名握手會入場券一張(市價1500元)
+        </div>
+      </div>
+      <div class="lottery__btn">我要抽獎</div>      
+    </div>
+    <div class="lottery__result hide">
+      <div class="lottery__result-text">恭喜你中頭獎了！日本東京來回雙人遊！</div>
+      <div class="lottery__result-btn">我要抽獎</div>
+    </div>
+  </section>  
+  <footer>
+    <div class="footer__top">
+      <div class="wrapper">
+        <div class="footer__info">
+          <div>餐館地址: 天上地下天堂路三分之一里六段520號</div>
+          <div>訂位專線：02-1314-5566</div>
+          <div>營業時間：週一〜週五 09:00~18:00 / 週六、週日、國定假日（含連假）休息</div>
+          <div>email：service@justabite.com.tw</div>
+        </div>
+        <div>
+          <div class="footer__site">
+            Just A Bite!
+          </div>
+          <div>Facebook / Instagram / Youtube</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
+    </div>
+  </footer>
+
+  <script>
+    const url = "https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery"
+    const errorMessage = "系統不穩定，請再試一次"
+
+    document.querySelector(".lottery__btn").addEventListener("click", (e) => {
+      let request = new XMLHttpRequest()
+      request.open("GET", url, true)
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          let json
+          try {
+            json = JSON.parse(request.response)
+          } catch (error) {
+            alert(errorMessage)
+            return
+          }
+
+          const resultText = document.querySelector(".lottery__result-text")
+          const lotteryBlock = document.querySelector(".lottery")
+
+          if (json.prize === "FIRST") {
+            resultText.innerText = "恭喜你中頭獎了！日本東京來回雙人遊！"
+            lotteryBlock.classList.add(json.prize)
+            toggleClass()
+          } else if (json.prize === "SECOND") {
+            resultText.innerText = "二獎！90 吋電視一台！"
+            lotteryBlock.classList.add(json.prize)
+            toggleClass()
+          } else if (json.prize === "THIRD") {
+            resultText.innerText = "恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！"
+            lotteryBlock.classList.add(json.prize)
+            toggleClass()
+          } else if (json.prize === "NONE") {
+            resultText.innerText = "銘謝惠顧"
+            lotteryBlock.classList.add(json.prize)
+            toggleClass()
+          } else {
+            alert(errorMessage)
+            return
+          }
+
+        } else {
+          alert(errorMessage)
+        }
+      }
+      request.send()
+
+    })
+
+    document.querySelector(".lottery__result-btn").addEventListener("click", (e) => {
+      toggleClass()
+      const classList = document.querySelector(".lottery").classList
+      classList.remove(classList[1])
+    })
+
+    function toggleClass() {
+      document.querySelector(".lottery__result").classList.toggle("hide")
+      document.querySelector(".lottery__box").classList.toggle("hide")
+    }
+
+  </script>
+
+</body>
+</html>
