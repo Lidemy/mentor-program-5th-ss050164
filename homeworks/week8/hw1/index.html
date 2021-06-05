@@ -78,7 +78,7 @@
     const url = "https://dvwhnbka7d.execute-api.us-east-1.amazonaws.com/default/lottery"
     const errorMessage = "系統不穩定，請再試一次"
 
-    document.querySelector(".lottery__btn").addEventListener("click", function(e) {
+    document.querySelector(".lottery__btn").addEventListener("click", (e) => {
       let request = new XMLHttpRequest()
       request.open("GET", url, true)
       request.onload = function() {
@@ -123,7 +123,7 @@
 
     })
 
-    document.querySelector(".lottery__result-btn").addEventListener("click", function(e) {
+    document.querySelector(".lottery__result-btn").addEventListener("click", (e) => {
       toggleClass()
       const classList = document.querySelector(".lottery").classList
       classList.remove(classList[1])

@@ -8,7 +8,7 @@
 - JSON with Padding。主要是依據 `<script>` 標籤不會受到 CORS (同源政策) 限制的原理，來達成傳送資料的目的。在使用時會在 `<script>` 中放資料，再透過設定好的 function 將資料回傳。
 
 ## 要如何存取跨網域的 API？
-- 如果不是用瀏覽器對跨網域的 API 發送 request，就不會受到 CORS 的限制，因為 CORS 是瀏覽器給的限制。 CORS 是指如果 request 的來源跟 server 不同 origin，瀏覽器仍會送出 request、 server也會送出相對應的 response，但瀏覽器會將 response 擋下來的情形。
+- 如果不是用瀏覽器對跨網域的 API 發送 request，就不會受到 CORS 的限制，因為 CORS 是瀏覽器給的限制。 CORS 是指如果 request 的來源跟 server 不同 origin，瀏覽器仍會送出 request、 server 也會送出相對應的 response，但瀏覽器會將 response 擋下來的情形。
 - 如果要用瀏覽器對跨網域的 API 發送 request，則 server 端回傳的 response header 需要加上 `Access-Control-Allow-Origin`，如果允許所有網域存取，則可以將此參數設為 `*`。 
 
 ## 為什麼我們在第四週時沒碰到跨網域的問題，這週卻碰到了？
