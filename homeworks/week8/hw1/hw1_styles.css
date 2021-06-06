@@ -55,19 +55,19 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0px 12px;
+
 }
 
 .lottery {
   background: url("./games-bn.jpg") center/cover no-repeat;
   height: 600px;
+  min-height: calc(100vh - 84px - 245.4px);
   position: relative;
 }
 
 h3 {
   margin: 0;
 }
-
-
 
 .lottery__box {
   position: relative;
@@ -230,6 +230,10 @@ h3 {
     text-align: center;
     margin-left: 0;
   }
+
+  .lottery {
+    min-height: 0px;
+  }
   
   .lottery__box {
     width: 300px;
@@ -246,7 +250,6 @@ h3 {
     padding: 0px 5px;
     line-height: 2rem;
   }
-
 
   .footer__top .wrapper {
     flex-direction: column-reverse;
@@ -287,6 +290,10 @@ h3 {
     flex: 1;
     text-align: center;
     margin-left: 0;
+  }
+
+  .lottery {
+    min-height: 0px;
   }
  
   .lottery__box {

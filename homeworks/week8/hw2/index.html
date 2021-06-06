@@ -145,6 +145,13 @@
       margin-bottom: 10px;
     }
 
+    @media (min-width:1026px) {
+      .streams {
+        justify-content: flex-start;
+        max-width: 1026px;
+      }
+    }
+
     @media (min-width: 390px) and (max-width: 768px) {
       .navbar {
         padding: 0px;
@@ -171,7 +178,6 @@
         text-align: center;
         margin-left: 0;
         font-size: 16px;
-
       }
 
       h1 {
@@ -269,49 +275,31 @@
   </div>
 
   <script>
-    const url = "https://api.twitch.tv/kraken/"
-    const clientID = "tpdkp7cv9zhne97341r6xl07qpwf1q"
-    const acceptValue = "application/vnd.twitchtv.v5+json"
+    const URL = "https://api.twitch.tv/kraken/"
+    const CLIENT_ID = "tpdkp7cv9zhne97341r6xl07qpwf1q"
+    const ACCEPT_VALUE = "application/vnd.twitchtv.v5+json"
+    const GAME_LIMIT = 5
+    const STREAM_LIMIT = 20
     const errorMessage = "Error! Try again!"
 
-    function getTopGames(cb) {
-      const gameRequest = new XMLHttpRequest()
-      gameRequest.open("GET", `${url}games/top?limit=5`, true)
-      gameRequest.setRequestHeader("Client-ID", clientID)
-      gameRequest.setRequestHeader("Accept", acceptValue)
+    function getAPIResults(API, limit, cb) {
+      const request = new XMLHttpRequest()
+      request.open("GET", `${URL}${API}limit=${limit}`, true)
+      request.setRequestHeader("Client-ID", CLIENT_ID)
+      request.setRequestHeader("Accept", ACCEPT_VALUE)
 
-      gameRequest.onload = () => {
-        if (gameRequest.status >= 200 && gameRequest.status < 400) {
-          cb(JSON.parse(gameRequest.responseText))
+      request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+          cb(JSON.parse(request.responseText))
         } else {
           alert(errorMessage)
           return
         }
       }
-      gameRequest.onerror = () => {
+      request.onerror = () => {
         alert(errorMessage)
       }
-      gameRequest.send()
-    }
-
-    function getStreams(game, cb) {
-      const streamRequest = new XMLHttpRequest()
-      streamRequest.open("GET", `${url}streams?game=${encodeURIComponent(game)}&limit=20`, true)
-      streamRequest.setRequestHeader("Client-ID", clientID)
-      streamRequest.setRequestHeader("Accept", acceptValue)
-
-      streamRequest.onload = () => {
-        if (streamRequest.status >= 200 && streamRequest.status < 400) {          
-          cb(JSON.parse(streamRequest.responseText))
-        } else {
-          alert(errorMessage)
-          return
-        }
-      }
-      streamRequest.onerror = () => {
-        alert(errorMessage)
-      }
-      streamRequest.send()
+      request.send()
     }
 
     function appendStreams(streams) {
@@ -331,7 +319,7 @@
       }
     }
 
-    getTopGames((gameResponse) => {
+    getAPIResults("games/top?", GAME_LIMIT, (gameResponse) => {
       for (let i = 0; i < gameResponse.top.length; i++) {
           const element = document.createElement("li")
           element.innerText = gameResponse.top[i].game.name
@@ -339,9 +327,8 @@
       }
       const firstGame = gameResponse.top[0].game.name
       document.querySelector("h1").innerText = firstGame
-      getStreams(firstGame, (streamResponse) => {
-        const streams = streamResponse.streams
-        appendStreams(streams)
+      getAPIResults(`streams?game=${encodeURIComponent(firstGame)}&`, STREAM_LIMIT, (streamResponse) => {
+        appendStreams(streamResponse.streams)
       })
     })
 
@@ -351,9 +338,8 @@
         const selectedGame = element.innerText
         document.querySelector("h1").innerText = selectedGame
         document.querySelector(".streams").innerHTML = ""
-        getStreams(selectedGame, function(streamResponse) {
-          const streams = streamResponse.streams
-          appendStreams(streams)
+        getAPIResults(`streams?game=${encodeURIComponent(selectedGame)}&`, STREAM_LIMIT, (streamResponse) => {
+          appendStreams(streamResponse.streams)
         })
       }
     })

@@ -49,7 +49,7 @@
     </div>
     <div class="lottery__result hide">
       <div class="lottery__result-text">恭喜你中頭獎了！日本東京來回雙人遊！</div>
-      <div class="lottery__result-btn">我要抽獎</div>
+      <div class="lottery__result-btn">再抽一次</div>
     </div>
   </section>  
   <footer>
@@ -94,27 +94,26 @@
           const resultText = document.querySelector(".lottery__result-text")
           const lotteryBlock = document.querySelector(".lottery")
 
-          if (json.prize === "FIRST") {
-            resultText.innerText = "恭喜你中頭獎了！日本東京來回雙人遊！"
-            lotteryBlock.classList.add(json.prize)
-            toggleClass()
-          } else if (json.prize === "SECOND") {
-            resultText.innerText = "二獎！90 吋電視一台！"
-            lotteryBlock.classList.add(json.prize)
-            toggleClass()
-          } else if (json.prize === "THIRD") {
-            resultText.innerText = "恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！"
-            lotteryBlock.classList.add(json.prize)
-            toggleClass()
-          } else if (json.prize === "NONE") {
-            resultText.innerText = "銘謝惠顧"
-            lotteryBlock.classList.add(json.prize)
-            toggleClass()
-          } else {
-            alert(errorMessage)
-            return
+          switch(json.prize) {
+            case 'FIRST':
+              resultText.innerText = "恭喜你中頭獎了！日本東京來回雙人遊！"
+              break
+            case 'SECOND':
+              resultText.innerText = "二獎！90 吋電視一台！"
+              break
+            case 'THIRD':
+              resultText.innerText = "恭喜你抽中三獎：知名 YouTuber 簽名握手會入場券一張，bang！"
+              break
+            case 'NONE':
+              resultText.innerText = "銘謝惠顧"
+              break
+            default:
+              alert(errorMessage)
+              return
           }
-
+          
+          lotteryBlock.classList.add(json.prize)
+          toggleClass()
         } else {
           alert(errorMessage)
         }
