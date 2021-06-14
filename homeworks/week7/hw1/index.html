@@ -89,6 +89,17 @@
     © 2020 © Copyright. All rights Reserved.
   </footer>
   <script>
+
+    function setValue(column, values, element) {
+      if (column) {
+        if (column.value) {
+          values[column.name] = column.value
+        } else {
+          element.classList.remove("hide")
+        }
+      }
+    }
+
     document.querySelector("form").addEventListener("submit", (e) => {
       let values = {}
 
@@ -99,29 +110,10 @@
         const tel = elements[i].querySelector("input[type=tel]")
         const option = elements[i].querySelectorAll("input[type=radio]")
 
-        if (text) {
-          if (text.value) {
-            values[text.name] = text.value
-          } else {
-            elements[i].classList.remove("hide")
-          }
-        }
-        if (email) {
-          if (email.value) {
-            values[email.name] = email.value
-          }
-          else {
-            elements[i].classList.remove("hide")
-          }
-        }
-        if (tel) {
-          if (tel.value) {
-            values[tel.name]= tel.value
-          }
-          else {
-            elements[i].classList.remove("hide")
-          }
-        }
+        setValue(text, values, elements[i])
+        setValue(email, values, elements[i])
+        setValue(tel, values, elements[i])
+
         if (option.length > 0) {
           if (option[0].checked) {
             values[option[0].name] = option[0].value
