@@ -7,7 +7,7 @@
   $nickname = NULL;
   if (!empty($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $user = getUserFromUsername($username);
+    $user = get_user_from_username($username);
     $nickname = $user['nickname'];
   }
 ?>

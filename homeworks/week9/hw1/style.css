@@ -81,6 +81,9 @@ body {
   height: 50px;
   border-radius: 50%;
   background: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .comment__body {

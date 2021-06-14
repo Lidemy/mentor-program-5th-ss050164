@@ -1,7 +1,7 @@
 <?php
   require_once("conn.php");
   
-  function getUserFromUsername($username) {
+  function get_user_from_username($username) {
     global $conn;
 
     $user_sql = sprintf("SELECT * FROM keke_users WHERE username = '%s'", $username);
