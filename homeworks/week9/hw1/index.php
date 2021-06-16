@@ -7,7 +7,7 @@
   $nickname = NULL;
   if (!empty($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $user = getUserFromUsername($username);
+    $user = get_user_from_username($username);
     $nickname = $user['nickname'];
   }
 
@@ -66,7 +66,7 @@
     <section class="comments">
       <?php while ($row = $result->fetch_assoc()) { ?>
         <div class="comment">
-          <div class="comment__avatar"></div>
+          <div class="comment__avatar"><?php echo $row['nickname'][0]; ?></div>
           <div class="comment__body">
             <div class="comment__info">
               <span class="comment__user"><?php echo $row['nickname']; ?></span>

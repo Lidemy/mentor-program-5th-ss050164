@@ -21,6 +21,8 @@
     die($conn->error);
   }
 
+  session_start();
+  $_SESSION['username'] = $username;
   header("Location: index.php");
 
 ?>
