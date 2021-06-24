@@ -5,7 +5,7 @@
 
   $username = NULL;
   $user = NULL;
-  if (!empty($_SESSION['username'])) {
+  if (!empty($_SESSION['b_username'])) {
     header("Location: index.php");
     die();
   }

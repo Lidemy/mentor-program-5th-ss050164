@@ -4,8 +4,8 @@
   require_once("utils.php");
 
   $username = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['b_username'])) {
+    $username = $_SESSION['b_username'];
   }
 
   $page = 1;

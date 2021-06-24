@@ -10,7 +10,7 @@
     die("Data incomplete!");
   }
 
-  $username = $_SESSION['username'];
+  $username = $_SESSION['b_username'];
   $title = $_POST['title'];
   $category = $_POST['category'];
   $content = $_POST['content'];

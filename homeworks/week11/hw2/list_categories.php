@@ -4,8 +4,8 @@
   require_once("utils.php");
 
   $username = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['b_username'])) {
+    $username = $_SESSION['b_username'];
   }
 
   $stmt = $conn->prepare("SELECT category, COUNT(*) AS count FROM keke_articles WHERE is_deleted = 'N' GROUP BY category ORDER BY category ASC;");

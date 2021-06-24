@@ -4,12 +4,12 @@
   require_once("utils.php");
 
   $username = NULL;
-  if (empty($_SESSION['username'])) {
+  if (empty($_SESSION['b_username'])) {
     header("Location: index.php?errCode=1");
     die("Access denied");
   }
 
-  $username = $_SESSION['username'];
+  $username = $_SESSION['b_username'];
 
   $stmt = $conn->prepare("SELECT * FROM keke_articles WHERE is_deleted = 'N' ORDER BY created_time DESC;");
   $result = $stmt->execute();

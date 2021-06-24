@@ -3,7 +3,7 @@
   require_once("conn.php");
   require_once("utils.php");
 
-  if (!$_SESSION['username']) {
+  if (!$_SESSION['b_username']) {
     header("Location: index.php?errCode=1");
     exit();
   }

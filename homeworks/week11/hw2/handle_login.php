@@ -27,7 +27,7 @@
   $row = $result->fetch_assoc();
 
   if (password_verify($password, $row['password'])) {
-    $_SESSION['username'] = $username;
+    $_SESSION['b_username'] = $username;
     header("Location: index.php");    
   } else {
     header("Location: login.php?errCode=2");
