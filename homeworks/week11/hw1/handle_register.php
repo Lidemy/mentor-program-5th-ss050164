@@ -4,7 +4,7 @@
 
   if (empty($_POST['nickname']) || empty($_POST['username']) || empty($_POST['password'])) {
     header("Location: register.php?errCode=1");
-    die("Data incomplete!");
+    die(); // Data incomplete!
   }
 
   $nickname = $_POST['nickname'];
@@ -21,10 +21,11 @@
     if ($code === 1062) {
       header("Location: register.php?errCode=2");
     }
-    die($conn->error);
+    header("Location: register.php?errCode=3");
+    die(); // database error
   }
 
-  $_SESSION['username'] = $username;
+  $_SESSION['board_username'] = $username;
   header("Location: index.php");
 
 ?>

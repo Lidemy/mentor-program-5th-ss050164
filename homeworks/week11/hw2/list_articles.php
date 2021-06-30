@@ -86,7 +86,8 @@
               </span>
             </div>
             <div class="article__body">
-              <div class="article__content list"><?php echo $row['content']; ?></div>
+              <div class="article__content partial"><?php echo mb_substr($row['content'], 0, 200, "utf-8"); ?></div>
+              <div class="article__content full"><?php echo $row['content']; ?></div>
             </div>
             <div class="article__bottom">
               <span class="article__read-btn">READ MORE</span>
@@ -108,19 +109,7 @@
   </main>
   <footer>Copyright © 2021 My Blog All Rights Reserved.</footer>
 
-  <script>
-    document.querySelector(".articles").addEventListener("click", (e) => {
-      if (e.target.classList.contains("article__read-btn")) {
-        e.target.parentNode.parentNode.classList.toggle("hide")
-        const btn = e.target.closest(".article__read-btn")
+  <script src="utils.js"></script>
 
-        if (!e.target.parentNode.parentNode.classList.contains("hide")) {          
-          btn.innerText = "SHOW LESS"
-        } else {
-          btn.innerText = "READ MORE"
-        }
-      }
-    })
-  </script>
 </body>
 </html>

@@ -5,15 +5,15 @@
 
   if (empty($_GET['comment_id'])) {
     header("Location: index.php?errCode=1");
-    die("Data incomplete!");
+    die(); // Data incomplete
   }
 
-  if (!$_SESSION['username']) {
+  if (!$_SESSION['board_username']) {
     header("Location: index.php?errCode=2");
     exit();
   }
 
-  $username = $_SESSION['username'];
+  $username = $_SESSION['board_username'];
   $user = get_user_from_username($username);
   $comment_id = $_GET['comment_id'];
 
@@ -24,7 +24,8 @@
   $query_result = $query_stmt->execute();
 
   if (!$query_result) {
-    die($conn->error);
+    header("Location: index.php?errCode=4");
+    die(); // database error
   }
 
   $query_result = $query_stmt->get_result();
@@ -40,7 +41,8 @@
   
   $result = $stmt->execute();  // 儲存執行或失敗
   if (!$result) {
-    die($conn->error);
+    header("Location: index.php?errCode=4");
+    die(); // database error
   }
 
   header("Location: index.php");

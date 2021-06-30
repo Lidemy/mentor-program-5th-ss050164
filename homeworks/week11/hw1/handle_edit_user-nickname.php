@@ -5,11 +5,11 @@
 
   if (empty($_POST['nickname'])) {
     header("Location: index.php?errCode=1");
-    die("Data incomplete!");
+    die(); // Data incomplete
   }
 
   $nickname = $_POST['nickname'];
-  $username = $_SESSION['username'];
+  $username = $_SESSION['board_username'];
   
   $sql = "UPDATE keke_users SET nickname = ? WHERE username = ?";
   $stmt = $conn->prepare($sql);
@@ -17,7 +17,8 @@
   
   $result = $stmt->execute();  // 儲存執行或失敗
   if (!$result) {
-    die($conn->error);
+    header("Location: index.php?errCode=4");
+    die(); // database error
   }
 
   header("Location: index.php");

@@ -7,8 +7,8 @@
 
   $username = NULL;
   $user = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['board_username'])) {
+    $username = $_SESSION['board_username'];
     $user = get_user_from_username($username);
   }
 

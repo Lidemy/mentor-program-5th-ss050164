@@ -4,19 +4,20 @@
 
   if (empty($_POST['username']) || empty($_POST['password'])) {
     header("Location: login.php?errCode=1");
-    die("Data incomplete!");
+    die(); // Data incomplete!
   }
 
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  $sql = "SELECT * FROM keke_users WHERE username = ? ";
+  $sql = "SELECT * FROM keke_blog_users WHERE username = ? ";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param('s', $username);
   $result = $stmt->execute();
 
   if (!$result) {
-    die($conn->error);
+    header("Location: login.php?errCode=3");
+    exit();
   }
 
   $result = $stmt->get_result();
@@ -31,6 +32,7 @@
     header("Location: index.php");    
   } else {
     header("Location: login.php?errCode=2");
+    die();
   }
 
 ?>

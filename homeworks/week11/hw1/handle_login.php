@@ -4,7 +4,7 @@
 
   if (empty($_POST['username']) || empty($_POST['password'])) {
     header("Location: login.php?errCode=1");
-    die("Data incomplete!");
+    die(); // data incomplete
   }
 
   $username = $_POST['username'];
@@ -16,20 +16,23 @@
   $result = $stmt->execute();
 
   if (!$result) {
-    die($conn->error);
+    header("Location: login.php?errCode=3");
+    die(); // database error
   }
 
   $result = $stmt->get_result();
   if ($result->num_rows === 0) {
     header("Location: login.php?errCode=2");
-    exit();
+    exit(); // wrong username
   }
+
   $row = $result->fetch_assoc();
   if (password_verify($password, $row['password'])) {
-    $_SESSION['username'] = $username;
+    $_SESSION['board_username'] = $username;
     header("Location: index.php");    
   } else {
     header("Location: login.php?errCode=2");
+    die(); // wrong password
   }
 
 ?>

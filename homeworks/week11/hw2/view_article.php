@@ -16,7 +16,7 @@
   $result = get_article_from_article_id($article_id);
   if ($result->num_rows === 0) {
     header("Location: index.php?errCode=2");
-    die("Invalid article id");
+    die(); // Invalid article id
   }
 
   $row = $result->fetch_assoc();
