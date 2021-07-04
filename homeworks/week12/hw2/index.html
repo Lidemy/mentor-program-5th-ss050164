@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo List</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script>
+    function escapeHtml(unsafe) {
+      return unsafe
+           .replace(/&/g, "&amp;")
+           .replace(/</g, "&lt;")
+           .replace(/>/g, "&gt;")
+           .replace(/"/g, "&quot;")
+           .replace(/'/g, "&#039;")
+    }
+
+    function addNewTodo(newTodo) {
+      $.ajax({
+        type: 'POST',
+        url: `http://mentor-program.co/mtr04group5/keke/week12/hw2/api_add_todo.php`,
+        data: { todo_list: newTodo },
+        success: (response) => {
+          const todolistID = response.todolist_id
+          window.location = `index.html?todolist_id=${todolistID}`
+          alert(`Saved todolist ID: ${todolistID}`)
+        },
+        error: (err) => {
+          alert(err)
+        }
+      })
+    }
+
+    function itemTemplate(id, content, completed) {
+      let template = `<div class="item ${completed? "completed" : "incompleted"}" id="${id}">
+                       <input type="checkbox" class="form-check-input me-1 checkbox ${completed? "checked" : ""}"/>
+                       <div class="todo__content">${escapeHtml(content)}</div>
+                       <input type="text" class="todo__content-edit hide" style="display:none" />
+                       <button class="btn btn-secondary btn-sm edit-btn">Update</button>
+                       <button class="btn btn-secondary btn-sm del-btn">Delete</button>
+                    </div>`
+      return template
+    }
+
+    function showTodo(todolist) {
+      if (todolist.length === 0) {
+        return
+      }
+      count = 0
+      todoID = parseInt(todolist[0].id)
+      for (let i = 0; i < todolist.length; i++) {
+        const item = todolist[i]
+        let div = itemTemplate(item.id, item.content, item.completed)
+        if (!item.completed) {
+          count++
+        }
+        $('.todo-list').append(div)        
+      }
+      $('.checked').prop('checked', true)
+      $('.count').text(`${count} items left`)
+    }
+
+    let count = 0
+    let todoID = 0
+    let getUrlString = location.href
+    let url = new URL(getUrlString)
+    const todolistID = url.searchParams.get('todolist_id')
+
+    if (todolistID) {
+      $.getJSON(`http://mentor-program.co/mtr04group5/keke/week12/hw2/api_get_todo.php?todolist_id=${todolistID}`, (data) => {
+        if (!data.is_success) {
+          alert(data.message)
+          return
+        }
+        const todolist = JSON.parse(data.data.todolist)
+        showTodo(todolist)
+      });
+    }
+ 
+    $(document).ready(() => {
+      $('.count').text(`${count} items left`)
+
+      // add a new todo
+      $('.add-btn').click((e) => {
+        const value = ($('input[type=text]').val()).trim()
+        let div = null
+        if (!value) {
+          return
+        }
+        todoID++
+        div = itemTemplate(todoID, value, false)
+        $('.todo-list').prepend(div)
+        count++
+
+        $('.add__input').val('')
+        $('.count').text(`${count} items left`)
+      })
+
+      // delete one todo
+      $('.todo-list').click((e) => {
+        if ($(e.target).hasClass('del-btn')) {
+          $(e.target).parent().remove()
+          if ($(e.target).parent().hasClass('incompleted')) {
+            count--
+            $('.count').text(`${count} items left`)
+          }
+          return
+        }
+
+        // change status of a todo
+        if ($(e.target).hasClass('checkbox')) {
+          if ($(e.target).parent().hasClass('incompleted')) {
+            count--
+            $('.count').text(`${count} items left`)
+          }
+          if ($(e.target).parent().hasClass('completed')) {
+            count++
+            $('.count').text(`${count} items left`)
+          }
+          $(e.target).toggleClass('checked')
+          $(e.target).parent().toggleClass('completed')
+          $(e.target).parent().toggleClass('incompleted')
+        }
+
+        // edit todo content
+        if ($(e.target).hasClass('edit-btn')) {
+          let content = null
+          let input = $(e.target).prev()
+          let item = $(e.target).prev().prev()
+
+          // show input
+          if (input.hasClass('hide')) {
+            content = item.text()
+            input.show()
+            input.removeClass('hide')
+            input.val(content)
+            item.hide()
+          } else { // update value
+            content = (input.val()).trim()
+            if (!content) {
+              return
+            }
+            input.hide()
+            input.addClass('hide')
+            item.text(content)
+            item.show()    
+          }              
+        }    
+      })
+
+      // clear completed items
+      $('.clear-completed').click(() => {
+        $('.completed').remove()
+      })
+
+      // clear all items (completed & incompleted)
+      $('.clear-btn').click(() => {
+        count = 0
+        $('.count').text(`${count} items left`)
+        $('.item').remove()
+      })
+
+      // view by option
+      $('.bottom__option-list').click((e) => {
+        $('.bottom__option-list li').removeClass('active')
+        $(e.target).addClass('active')
+
+        if ($(e.target).hasClass('option-all')) {
+          $('.item').show()
+        }
+        if ($(e.target).hasClass('option-active')) {
+          $('.completed').hide()
+          $('.incompleted').show()
+        }
+        if ($(e.target).hasClass('option-completed')) {
+          $('.incompleted').hide()
+          $('.completed').show()
+        }
+      })
+
+      // save current todo list
+      $('.save-btn').click((e) => {
+        let items = []
+        $('.item').each((i, element) => {
+          const checkbox = $(element).find('.checkbox')
+          const content = $(element).find('.todo__content')
+          items.push({
+            id: $(element).attr('id'),
+            content: content.text(),
+            completed: $(element).hasClass('completed')
+          })
+        })
+
+        if (items.length === 0) {
+          return
+        }
+        const data = JSON.stringify(items)
+        addNewTodo(data)
+      })
+    })
+
+  </script>
+  <style>
+    body {
+      font-family: Calibri;
+      min-width: 600px;
+    }
+
+    .wrapper {
+      max-width: 600px;
+      min-width: 300px;
+      margin: 5px auto;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .title {
+      text-align: center;
+      padding-top: 5px;
+      color: #343a40;
+    }
+
+    .add__block {
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    .add__input {
+      min-width: 75%;
+      font-family: Calibri;
+      border: solid 1px #d0d0d0;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .todo-list {
+      padding-bottom: 3%;
+      margin: 0 auto;
+      width: 95%;
+    }
+
+    .item {
+      display: flex;
+      justify-content: center;
+      padding: 5px 0px;
+      align-items: center;
+    }
+
+    .todo__content {
+      width: 70%;
+      min-width: 70%;
+      margin: 0px 5px;
+      word-wrap: break-word;
+      color: #343a40;
+      border: solid 1px rgba(0, 0, 0, 0);
+    }
+
+    .todo__content-edit {
+      min-width: 70%;
+      margin: 0px 5px;
+      border: solid 1px #d0d0d0;
+      border-radius: 5px;
+      padding: 0px;
+    }
+
+    .completed .todo__content {
+      color: #6c757d;
+      text-decoration: line-through;
+    }
+
+    button + button {
+      margin-left: 5px;
+    }
+
+    .todo-hr {
+      margin: 0px auto;
+      background: darkgrey;
+      height: 1px;
+      width: 90%;
+    }
+
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;      
+      margin: 20px 15px 10px 15px;
+    }
+
+    .bottom__option-list {
+      list-style: none;
+      display: flex;
+      padding: 5px 0px;
+      border: 1px solid grey;
+      margin: 0;
+    }
+
+    .bottom__option-list li {
+      margin: 0px 15px;
+      cursor: pointer;
+      width: 80px;
+      text-align: center;
+    }
+
+    .bottom__option-list li:hover,
+    .bottom__option-list li.active {
+      background: #0d6efd;
+      color: white;
+    }
+
+    .clear-completed {
+      border: 1px solid grey;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .save-btn, .clear-btn {
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">
+      <h1>My ToDo List</h1>
+    </div>
+    <div class="add__block">
+      <input type="text" class="add__input" />
+      <button class="btn btn-secondary btn-sm add-btn">Add</button>
+    </div>
+    <div class="todo-list">
+    </div>
+    <div class="todo-hr"></div>
+    <div class="bottom">
+      <div class="bottom__info count"></div>
+      <div class="bottom__options">
+        <ul class="bottom__option-list">
+          <li class="option-all active">All</li>
+          <li class="option-active">Active</li>
+          <li class="option-completed">Completed</li>
+        </ul>
+      </div>
+      <button class="btn btn-secondary clear-completed">Clear completed</button>
+    </div>
+
+    <button class="btn btn-secondary btn-sm save-btn">Save</button>
+    <button class="btn btn-secondary btn-sm clear-btn">Clear</button>
+
+  </div>
+
+</body>
+</html>

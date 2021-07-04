@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Board</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    @media (min-width: 768px) {
+      .wrapper {
+        max-width: 70%;
+        margin: 0 auto;
+      }
+    }
+
+    .btn {
+      margin: 10px 0px;
+    }
+
+    .card {
+      margin-bottom: 10px;
+    }
+    
+  </style>
+  <script>
+    function escapeHtml(unsafe) {
+      return unsafe
+           .replace(/&/g, '&amp;')
+           .replace(/</g, '&lt;')
+           .replace(/>/g, '&gt;')
+           .replace(/"/g, '&quot;')
+           .replace(/'/g, '&#039;')
+    }
+
+    function getCommentsFromAPI(siteKey, limit, cb) {
+      $.ajax({
+        metnod: 'GET',
+        url: `http://mentor-program.co/mtr04group5/keke/week12/hw1/api_comments.php?site_key=${siteKey}&limit=${limit}`
+      }).done((data) => {
+        if (!data.is_success) {
+          alert(data.message)
+          return
+        }
+        cb(data.comments)       
+      })
+    }
+
+    function addNewComment(newComment) {
+      $.ajax({
+        type: 'POST',
+        url: `http://mentor-program.co/mtr04group5/keke/week12/hw1/api_add_comment.php`,
+        data: newComment
+      }).done((data) => {
+        if (!data.is_success) {
+          alert(data.message)
+          return
+        }
+        $('input[name=nickname]').val('')
+        $('textarea[name=content]').val('')
+
+        // if total is equal to count, it means all comments are displayed before adding the new comment
+        // hence, we need to set count to zero manually, otherwise showComments() will calculate the wrong count
+        if (total === count) {
+          count = 0
+        }
+        showComments()
+      });
+    }
+
+    function showComments() {
+      // call API to get comments
+      getCommentsFromAPI(siteKey, limit, (comments) => {
+        $('.comments').empty()
+
+        // get the quantity of the comments.
+        // Null means first time to call showComments.
+        // if comment[0].post_id is greater than total, it means a new comment is added.    
+        if (total === null || comments[0].post_id > total) {
+          total = comments[0].post_id
+        }
+
+        for (let comment of comments) {
+          appendComment($('.comments'), comment, false)
+          count++
+        }
+        
+        // if total is greater than count, it means there are still more comments to show
+        // hence, show the load more button and set count to 0 to avoid duplicate count in next round
+        if (total > count) {
+          $('.comments').append(loadMoreBtn)          
+          count = 0
+        }
+      })    
+    }
+
+    function appendComment(container, comment, isPrepend) {
+      const commentBlock = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">#${escapeHtml(comment.post_id.toString())} ${escapeHtml(comment.nickname)}</h5>
+            <p class="card-text">${escapeHtml(comment.created_time)}</p>
+            <p class="card-text">${escapeHtml(comment.content)}</p>
+          </div>
+        </div>
+      `
+      if (isPrepend) {
+        container.prepend(commentBlock)
+      } else {
+        container.append(commentBlock)
+      }
+    }
+
+    let siteKey = 'test'
+    let limit = 5
+    let total = null
+    let count = 0
+    let loadMoreBtn = '<button class="btn btn-primary load-more">Load More</button>'
+
+    $(document).ready(() => {
+      showComments()   
+
+      $('.comments').on('click', '.load-more', () => {
+        limit += 5
+        showComments()
+      })
+
+      $('.add-comment-form').submit((e) => {
+        e.preventDefault();
+        const newComment = {
+          site_key: siteKey,
+          nickname: $('input[name=nickname]').val(),
+          content: $('textarea[name=content]').val()
+        }
+
+        addNewComment(newComment)
+        if (total === limit) {
+          limit += 5
+        }
+      })
+    })
+
+  </script>
+  
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="container">
+      <form class="add-comment-form">
+        <div class="form-group">
+          <label for="form-nickname">Nickname</label>
+          <input name="nickname" type="text" class="form-control" id="form-nickname" >
+        </div>
+        <div class="form-group">
+          <label for="content-textarea">Content</label>
+          <textarea name="content" class="form-control" id="content-textarea" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">submit</button>
+      </form>
+      <div class="comments">
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
