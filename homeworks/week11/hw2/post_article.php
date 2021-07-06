@@ -6,7 +6,7 @@
   $username = NULL;
   if (empty($_SESSION['b_username'])) {
     header("Location: index.php?errCode=1");
-    die("Access denied");
+    die(); // Access denied
   }
   $username = $_SESSION['b_username'];
 
@@ -40,6 +40,10 @@
                 $errorMsg = "Error!";
                 if ($code === '1') {
                   $errorMsg = "data incomplete!";
+                } else if ($code === '2') {
+                  $errorMsg = "only spaces in data.";
+                } else if ($code === '3') {
+                  $errorMsg = "database error. Please try again!";
                 } 
                 echo '<span class="blog__error">Error: ' . escape($errorMsg) . '</span>';
               }

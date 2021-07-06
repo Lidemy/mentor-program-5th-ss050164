@@ -5,8 +5,8 @@
 
   $username = NULL;
   $user = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['board_username'])) {
+    $username = $_SESSION['board_username'];
     $user = get_user_from_username($username);
   }
 
@@ -83,6 +83,10 @@
           $errorMsg = "you can't delete other's comment!";
         } else if ($code === '3') {
           $errorMsg = "access denied!";
+        } else if ($code === '4') {
+          $errorMsg = "database error. Please try again.";
+        } else if ($code === '5') {
+          $errorMsg = "data can't include space only";
         } 
         echo '<span class="board__error">Error: ' . escape($errorMsg) . '</span>';
       }

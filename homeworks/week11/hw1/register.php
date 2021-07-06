@@ -6,8 +6,8 @@
   $username = NULL;
   $user = NULL;
   $nickname = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['board_username'])) {
+    $username = $_SESSION['board_username'];
     $user = get_user_from_username($username);
     $nickname = $user['nickname'];
   }
@@ -44,6 +44,8 @@
           $errorMsg = 'data incomplete!';
         } else if ($code === '2') {
           $errorMsg = 'duplicate username!';
+        } else if ($code === '3') {
+          $errorMsg = "database error. Please try again.";
         }
         echo '<span class="board__error">Error: ' . escape($errorMsg) . '</span>';
       }

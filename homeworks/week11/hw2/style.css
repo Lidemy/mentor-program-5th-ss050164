@@ -151,9 +151,12 @@ footer {
   font-size: 14px;
 }
 
-.hide > .article__body > .article__content {
-  max-height: 160px;
-  overflow: hidden;
+.hide > .article__body > .article__content.full {
+  display: none;
+}
+
+.show > .article__body > .article__content.partial {
+  display: none;
 }
 
 .article__bottom {
@@ -207,11 +210,6 @@ input[type=password] {
 .article__content.view {
   height: 0%;
   max-height: 100%;
-}
-
-.hide > .article__body > .article__content.list {
-  max-height: 50px;
-  overflow: hidden;
 }
 
 .admin.article__info {

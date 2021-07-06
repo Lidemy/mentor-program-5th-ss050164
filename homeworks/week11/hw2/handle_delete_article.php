@@ -10,7 +10,7 @@
 
   if (empty($_GET['article_id'])) {
     header("Location: index.php?errCode=2");
-    die("Data incomplete!");
+    die(); // Data incomplete!
   }
 
   $article_id = $_GET['article_id'];
@@ -21,7 +21,8 @@
   
   $result = $stmt->execute();  // 儲存執行或失敗
   if (!$result) {
-    die($conn->error);
+    header("Location: admin.php&errCode=1");
+    die(); // database error
   }
 
   header("Location: admin.php");

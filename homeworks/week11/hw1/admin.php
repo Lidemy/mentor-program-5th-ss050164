@@ -5,14 +5,14 @@
 
   $username = NULL;
   $user = NULL;
-  if (!empty($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+  if (!empty($_SESSION['board_username'])) {
+    $username = $_SESSION['board_username'];
     $user = get_user_from_username($username);
   }
 
   if (!$user || $user['role_id'] !== 1) {
     header("Location: index.php?errCode=3");
-    die("Access denied.");
+    die(); // Access denied.
   }
 
   $stmt = $conn->prepare("SELECT * FROM keke_users JOIN keke_roles ON keke_users.role_id = keke_roles.role_id ORDER BY user_id ASC;");
@@ -53,6 +53,8 @@
           $errorMsg = "unable to set admin from front end!";
         } else if ($code === '3') {
           $errorMsg = "invalid option";
+        } else if ($code === '4') {
+          $errorMsg = "database error. Please try again.";
         }
         echo '<span class="board__error">Error: ' . escape($errorMsg) . '</span>';
       }

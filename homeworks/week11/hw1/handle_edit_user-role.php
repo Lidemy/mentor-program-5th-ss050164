@@ -26,7 +26,8 @@
   
   $result = $stmt->execute();  // 儲存執行或失敗
   if (!$result) {
-    die($conn->error);
+    header("Location: admin.php?errCode=4");
+    die(); // database error
   }
 
   header("Location: admin.php");

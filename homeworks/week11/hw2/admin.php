@@ -6,7 +6,7 @@
   $username = NULL;
   if (empty($_SESSION['b_username'])) {
     header("Location: index.php?errCode=1");
-    die("Access denied");
+    die(); // Access denied
   }
 
   $username = $_SESSION['b_username'];
@@ -40,6 +40,16 @@
       <section class="articles">
         <div class="section__head">
           <div class="section__title">Admin</div>
+          <?php
+              if (!empty($_GET['errCode'])) {
+                $code = $_GET['errCode'];
+                $errorMsg = "Error!";
+                if ($code === '1') {
+                  $errorMsg = "database error. Please try again!";
+                } 
+                echo '<span class="blog__error">Error: ' . escape($errorMsg) . '</span>';
+              }
+            ?>
         </div>
         <?php while ($row = $result->fetch_assoc()) { ?>
           <div class="article admin">

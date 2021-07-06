@@ -39,6 +39,8 @@
             $errorMsg = 'data incomplete!';
           } else if ($code === '2') {
             $errorMsg = 'wrong username or password!';
+          } else if ($code === '3') {
+            $errorMsg = 'database error. Please try again.';
           }
           echo '<span class="blog__error">Error: ' . escape($errorMsg) . '</span>';
         }
