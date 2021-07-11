@@ -1,0 +1,54 @@
+@use '_variables';
+
+@mixin header-footer-list {
+  display: block;
+  background: variables.$deep-green-01;
+  font-weight: bolder;
+  text-align: center;
+  padding: 10px;
+  color: white;
+}
+
+@mixin big-btn {
+  padding: 10px 20px;
+  border: variables.$border-gray;
+  color: black;
+  cursor: pointer;
+}
+
+@mixin small-btn {
+  padding: 5px 10px;
+  border: variables.$border-gray;
+  color: gray;
+  font-size: 14px;
+}
+
+@mixin size($width: null, $height: null) {
+  width: $width;
+  height: $height;
+}
+
+@mixin min-size($min-width: null, $min-height: null) {
+  min-width: $min-width;
+  min-height: $min-height;
+}
+
+@mixin max-size($max-width: null, $max-height: null) {
+  max-width: $max-width;
+  max-height: $max-height;
+}
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin flex($flex-direction: row, $justify-content: flex-start, $align-items: stretch) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}

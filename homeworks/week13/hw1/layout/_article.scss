@@ -1,0 +1,63 @@
+.articles {
+  @include flex(column, center, center);
+  @include max-size($width-tablet);
+  background: white;
+  box-shadow: $form-box-shadow;
+  padding: 30px 10px;
+  margin: 30px auto;
+  &__wrapper {
+    @include min-size($min-height: calc(100vh - 30px - 38.4px - 60px - 38.4px));
+  }
+}
+
+.article {
+  @include flex(column, center);
+  @include size(90%);
+  border: $border-black;
+  margin: 0 auto;
+  padding: 20px;
+  & + & {
+    margin-top: 10px;
+  }
+  &__head {
+    @include flex(row, space-between, center);
+    margin-bottom: 5px;
+  }
+  &__title {
+    font-size: $font-size-title;
+  }
+  &__info {
+    background: lightgray;
+    padding: 5px;
+  }
+  &__edit-btn {
+    @include small-btn;
+    &:visited {
+      color: gray;
+    }
+  }
+  &__read-btn {
+    @include big-btn;
+  }
+  &__bottom {
+    margin: 10px 0px;
+  }
+  &__btn-block {
+    @include min-size(20%);
+  }
+  &__category-count {
+    margin-left: 5px;
+  }
+  &__content {
+    &.view  {
+      @include size($height: 0%);
+      @include max-size($max-height: 100%);
+    }
+    .show &.partial, .hide &.full {
+      display: none;
+    }
+  }
+  &.category {
+    padding: 10px;
+  }
+}

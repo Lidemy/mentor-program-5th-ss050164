@@ -1,0 +1,10 @@
+.paginator {
+  margin-top: 20px;
+  a, a:visited {
+    border: $border-gray;
+    padding: 5px;
+  }
+  & a + & a {
+    margin-left: 5px;
+  }
+}

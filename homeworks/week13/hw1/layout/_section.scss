@@ -1,0 +1,17 @@
+.section {
+  &__head {
+    display: flex;
+    align-self: flex-start;
+    margin: 0px 0px 20px 20px;
+  }
+  &__title {
+    font-size: $font-size-title;
+    margin-right: 5px;
+  }
+  &__head {
+    .blog__error {
+      align-self: flex-end;
+      margin-bottom: 0px;
+    }
+  }
+}
