@@ -1,0 +1,28 @@
+body {
+  @include min-size($width-tablet);
+  background: $color-background;
+  font-family: $font-main;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+input[type=text],
+input[type=password] {
+  width: 100%;
+  padding: 5px;
+  border: $border-gray;
+  margin-bottom: 10px;
+}
+
+.ck-editor__editable_inline {
+  @include size(variables.$height: 200px);
+  resize: vertical;
+  margin-bottom: 10px;
+}

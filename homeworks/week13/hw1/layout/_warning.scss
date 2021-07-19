@@ -1,0 +1,4 @@
+.warning {
+  @include header-footer-list;
+  @include position(sticky, 0px);
+}

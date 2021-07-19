@@ -1,0 +1,35 @@
+.blog {
+  &__login {
+    @include flex(column, center, flex-start);
+    @include max-size(500px);
+    background: white;
+    box-shadow: $form-box-shadow;
+    padding: 30px;    
+    margin: 10% auto;
+  }
+  &__login-form {
+    @include size(100%);
+  }
+  &__title {
+    display: inline-block;
+  }
+  &__btn, &__submit-btn {
+    @include big-btn;
+    background: white;
+  }
+  &__error {
+    color: red;
+    align-self: flex-start;
+    margin-bottom: 10px;
+  }
+  &__textarea {
+    @include size(100%, 200px);
+    border: $border-gray;
+    padding: 10px;
+    resize: vertical;
+  }
+  &__bottom {
+    text-align: center;
+    margin-top: 10px;
+  }
+}

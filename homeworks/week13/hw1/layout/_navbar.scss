@@ -1,0 +1,40 @@
+.navbar {
+  @include position(sticky, 38.4px);
+  box-shadow: 0 -1.4px 6px 0 #97a2a0;
+  padding: 0px 20px;
+  background: white;
+  z-index: 10;
+  .wrapper {
+    @include flex(row, space-between, center);
+    @include size($height: 60px);
+  }
+  &__left {
+    display: flex;
+  }
+  &__list {
+    display: flex;
+    list-style: none;    
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+    a {
+      display: block;
+      padding: 12px 20px;
+    }
+    li {
+      margin-left: 12px;
+      transition: background 0.1s;
+      &:hover {
+        background: $deep-green-01;
+        a {
+          color: white;
+        }
+      }
+    }
+  }
+  &__site-name a, &__site-name:visited a {
+    color: $color-logo;
+    font-size: $font-size-logo;
+    font-family: $font-main;
+  }
+}

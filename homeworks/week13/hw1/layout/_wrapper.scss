@@ -1,0 +1,5 @@
+.wrapper {
+  @include max-size($width-screen);
+  margin: 0 auto;
+  padding: 0px 12px;
+}
